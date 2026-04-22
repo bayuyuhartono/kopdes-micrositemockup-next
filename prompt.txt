@@ -1,0 +1,240 @@
+You are a senior full-stack engineer. Generate a complete working web project based on the following requirements.
+
+# PROJECT TITLE
+
+Village Cooperative Web (Simkopdes-style E-commerce Demo)
+
+# GOAL
+
+Build a modern, responsive web application inspired by a village cooperative website, with basic e-commerce functionality for presentation/demo purposes.
+
+# TECH STACK (MANDATORY)
+
+* Next.js (App Router)
+* TypeScript
+* Tailwind CSS
+* No external UI libraries (build components manually)
+* Use mock data (no real backend required)
+
+# DEPLOYMENT TARGET
+- Must be compatible with Cloudflare Pages (static hosting)
+- Use static export configuration
+
+# NEXT.JS CONFIG
+- Use "output: export"
+- Do NOT use server-side features (no SSR, no server actions)
+- Do NOT use API routes
+- Use client-side state only (localStorage for cart)
+
+# GENERAL REQUIREMENTS
+
+* Clean, modern UI (inspired by government/cooperative style)
+* Fully responsive (mobile + desktop)
+* Use reusable components
+* Use simple state management (React Context or useState)
+* No authentication required
+* No real payment integration (simulate only)
+
+---
+
+# PAGES TO CREATE
+
+## 1. Landing Page (/)
+
+Sections:
+
+* Navbar (logo + menu)
+* Hero section (title + subtitle + CTA)
+* About section
+* Services section
+* Top Products section (IMPORTANT FEATURE)
+
+### Top Products Section:
+
+* Show 5 products in grid (responsive)
+* Each product card:
+
+  * Image
+  * Name
+  * Price
+  * Short description
+* Button:
+  "View All Products" → redirect to /products
+
+---
+
+## 2. Product Listing Page (/products)
+
+* Grid layout (responsive)
+* Product card:
+
+  * Image
+  * Name
+  * Price
+  * Button: "View Detail"
+* Optional: simple search input (client-side filter)
+
+---
+
+## 3. Product Detail Page (/products/[id])
+
+* Large product image
+* Name
+* Price
+* Description
+* Quantity selector
+* Button:
+  "Add to Cart"
+
+---
+
+## 4. Cart Page (/cart)
+
+* List selected products
+* Show:
+
+  * Product name
+  * Price
+  * Quantity
+  * Subtotal
+* Allow:
+
+  * Increase/decrease quantity
+  * Remove item
+* Show total price
+* Button:
+  "Proceed to Checkout"
+
+---
+
+## 5. Checkout Page (/checkout)
+
+### Form Fields:
+
+* Full Name
+* Phone Number
+
+### Delivery Options (REQUIRED):
+
+Radio selection:
+
+* Pickup (Ambil di Tempat)
+* Delivery (Dikirim)
+
+IF Delivery selected:
+
+* Show address input (required)
+
+### Payment Methods:
+
+Show selectable options:
+
+* BCA
+* Mandiri
+* BRI
+* BNI
+* GoPay (optional)
+* OVO (optional)
+* DANA (optional)
+
+### Button:
+
+"Confirm Order"
+
+---
+
+## 6. Order Confirmation Page (/order-success)
+
+Display:
+
+* Order ID (generate random string)
+* List of items
+* Total price
+* Delivery method
+* Payment method
+* Status:
+  "Waiting for Payment" (default)
+
+---
+
+# COMPONENTS TO BUILD
+
+* Navbar
+* Footer
+* ProductCard
+* CartItem
+* Button (reusable)
+* Input (reusable)
+* Modal (optional)
+
+---
+
+# STATE MANAGEMENT
+
+* Create Cart Context:
+
+  * addToCart(product, qty)
+  * removeFromCart(id)
+  * updateQuantity(id, qty)
+  * clearCart()
+* Persist cart in localStorage
+
+---
+
+# DATA
+
+Create mock product data (at least 10 items):
+
+Fields:
+
+* id
+* name
+* price
+* image (use placeholder images)
+* description
+* stock
+
+---
+
+# STYLING
+
+* Use Tailwind CSS
+* Primary color: green
+* Clean card-based layout
+* Rounded corners, soft shadows
+* Good spacing and typography
+
+---
+
+# UX DETAILS
+
+* Disable checkout if cart is empty
+* Validate required fields
+* Show simple alerts for actions (e.g., "Added to cart")
+* Smooth navigation
+
+---
+
+# BONUS (IF POSSIBLE)
+
+* Add loading states
+* Add empty state for cart
+* Add simple animations (hover effects)
+
+---
+
+# OUTPUT FORMAT
+
+* Provide full project structure
+* Include all important files:
+
+  * app/
+  * components/
+  * context/
+  * data/
+* Include instructions:
+
+  * how to install
+  * how to run
+
+Make sure the code is clean, modular, and directly runnable.
