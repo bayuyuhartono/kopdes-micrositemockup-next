@@ -12,6 +12,7 @@ const VALID_USER = {
   email: "budi@mail.com",
   password: "password111",
   name: "Budi",
+  phone: "0812345678999",
 };
 
 const STORAGE_KEY = "simkopdes_auth";
@@ -19,6 +20,7 @@ const STORAGE_KEY = "simkopdes_auth";
 interface AuthUser {
   email: string;
   name: string;
+  phone: string;
 }
 
 interface AuthContextType {
@@ -50,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email.trim().toLowerCase() === VALID_USER.email &&
       password === VALID_USER.password
     ) {
-      const authUser: AuthUser = { email: VALID_USER.email, name: VALID_USER.name };
+      const authUser: AuthUser = { email: VALID_USER.email, name: VALID_USER.name, phone: VALID_USER.phone };
       setUser(authUser);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(authUser));
       return true;

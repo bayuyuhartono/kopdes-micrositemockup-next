@@ -14,7 +14,7 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-interface OrderData {
+export interface StoredOrder {
   orderId: string;
   name: string;
   phone: string;
@@ -26,15 +26,32 @@ interface OrderData {
   vaNumber: string;
   items: CartItem[];
   totalPrice: number;
+  status: "unpaid" | "paid";
+  createdAt: string;
+}
+
+export function saveOrderToHistory(order: StoredOrder) {
+  try {
+    const raw = localStorage.getItem("simkopdes_orders");
+    const existing: StoredOrder[] = raw ? JSON.parse(raw) : [];
+    const updated = [order, ...existing.filter((o) => o.orderId !== order.orderId)];
+    localStorage.setItem("simkopdes_orders", JSON.stringify(updated));
+  } catch {
+    // ignore
+  }
 }
 
 export default function OrderSuccessPage() {
-  const [order, setOrder] = useState<OrderData | null>(null);
+  const [order, setOrder] = useState<StoredOrder | null>(null);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const raw = sessionStorage.getItem("simkopdes_order");
-    if (raw) setOrder(JSON.parse(raw));
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    const stored: StoredOrder = { ...data, status: "unpaid", createdAt: new Date().toISOString() };
+    setOrder(stored);
+    saveOrderToHistory(stored);
   }, []);
 
   const handleCopy = (text: string) => {
@@ -191,8 +208,8 @@ export default function OrderSuccessPage() {
         <Link href="/products" className="flex-1">
           <Button fullWidth size="lg">Belanja Lagi</Button>
         </Link>
-        <Link href="/" className="flex-1">
-          <Button fullWidth size="lg" variant="outline">Kembali ke Beranda</Button>
+        <Link href="/profile" className="flex-1">
+          <Button fullWidth size="lg" variant="outline">Lihat Riwayat Pesanan</Button>
         </Link>
       </div>
     </div>

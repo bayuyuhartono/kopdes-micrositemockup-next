@@ -59,7 +59,7 @@ export default function Navbar() {
             {/* Auth */}
             {isLoggedIn ? (
               <div className="flex items-center gap-2 ml-2 pl-2 border-l border-gray-200">
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-lg">
+                <Link href="/profile" className="flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
                   <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center">
                     <span className="text-white text-xs font-bold">
                       {user?.name.charAt(0).toUpperCase()}
@@ -68,7 +68,7 @@ export default function Navbar() {
                   <span className="text-sm font-semibold text-green-800">
                     {user?.name}
                   </span>
-                </div>
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
@@ -118,17 +118,21 @@ export default function Navbar() {
           <div className="md:hidden border-t border-gray-100 py-2">
             {/* User info */}
             {isLoggedIn && (
-              <div className="flex items-center gap-3 px-4 py-3 mb-1 bg-green-50 rounded-xl mx-1">
+              <Link href="/profile" onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 mb-1 bg-green-50 rounded-xl mx-1 hover:bg-green-100 transition-colors">
                 <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
                   <span className="text-white text-sm font-bold">
                     {user?.name.charAt(0).toUpperCase()}
                   </span>
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                   <p className="font-semibold text-green-800 text-sm">{user?.name}</p>
-                  <p className="text-green-600 text-xs">{user?.email}</p>
+                  <p className="text-green-600 text-xs">Lihat Profil & Pesanan</p>
                 </div>
-              </div>
+                <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             )}
 
             {navLinks.map((link) => (

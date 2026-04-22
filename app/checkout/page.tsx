@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import AuthGuard from "@/components/AuthGuard";
@@ -29,7 +30,6 @@ const VA_BANKS = [
 ];
 
 interface FormErrors {
-  name?: string;
   phone?: string;
   address?: string;
   payment?: string;
@@ -38,9 +38,9 @@ interface FormErrors {
 function CheckoutContent() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
+  const { user } = useAuth();
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(user?.phone ?? "");
   const [delivery, setDelivery] = useState<"pickup" | "delivery">("pickup");
   const [address, setAddress] = useState("");
   const [payment, setPayment] = useState("");
@@ -67,9 +67,8 @@ function CheckoutContent() {
 
   const validate = (): boolean => {
     const errs: FormErrors = {};
-    if (!name.trim()) errs.name = "Nama lengkap wajib diisi";
     if (!phone.trim()) errs.phone = "Nomor HP wajib diisi";
-    else if (!/^(\+62|62|0)[0-9]{8,13}$/.test(phone.replace(/\s/g, "")))
+    else if (!/^(\+62|62|0)[0-9]{8,14}$/.test(phone.replace(/\s/g, "")))
       errs.phone = "Format nomor HP tidak valid";
     if (delivery === "delivery" && !address.trim())
       errs.address = "Alamat pengiriman wajib diisi";
@@ -90,7 +89,7 @@ function CheckoutContent() {
 
     const orderData = {
       orderId,
-      name,
+      name: user?.name ?? "",
       phone,
       delivery,
       address: delivery === "delivery" ? address : "",
@@ -125,8 +124,13 @@ function CheckoutContent() {
                 Informasi Pemesan
               </h2>
               <div className="grid sm:grid-cols-2 gap-4">
-                <Input label="Nama Lengkap" fullWidth required placeholder="Nama sesuai KTP"
-                  value={name} onChange={(e) => setName(e.target.value)} error={errors.name} />
+                <div className="flex flex-col gap-1">
+                  <label className="text-sm font-semibold text-gray-700">Nama Lengkap</label>
+                  <div className="flex items-center gap-2 border border-gray-200 bg-gray-50 rounded-lg px-4 py-2.5">
+                    <span className="text-gray-800 text-sm font-medium flex-1">{user?.name}</span>
+                    <span className="text-xs text-gray-400 bg-gray-200 px-2 py-0.5 rounded-full">Otomatis</span>
+                  </div>
+                </div>
                 <Input label="Nomor HP" fullWidth required placeholder="08xxxxxxxxxx" type="tel"
                   value={phone} onChange={(e) => setPhone(e.target.value)} error={errors.phone} />
               </div>
