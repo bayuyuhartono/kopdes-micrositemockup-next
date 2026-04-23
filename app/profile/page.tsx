@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import AuthGuard from "@/components/AuthGuard";
 import Button from "@/components/Button";
-import { StoredOrder } from "@/app/order-success/page";
+import { StoredOrder } from "@/lib/orders";
 
 function formatPrice(price: number) {
   return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(price);
@@ -131,7 +131,7 @@ function OrderDetail({ order, onBack }: { order: StoredOrder; onBack: () => void
                   </p>
                   <p className="text-xs text-blue-500 mb-1">Nomor Virtual Account</p>
                   <div className="flex items-center justify-between gap-3 bg-white rounded-lg border border-blue-100 px-4 py-3 mb-3">
-                    <span className="font-mono font-bold text-gray-800 text-xl tracking-widest">
+                    <span className="font-mono font-bold text-gray-800 text-sm sm:text-xl tracking-wider sm:tracking-widest break-all">
                       {currentOrder.vaNumber}
                     </span>
                     <button onClick={() => handleCopy(currentOrder.vaNumber)}
@@ -263,15 +263,15 @@ function ProfileContent() {
             </span>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {[
-            { label: "Total Pesanan", value: orders.length },
-            { label: "Belum Bayar",   value: unpaidCount },
+            { label: "Total Pesanan", value: String(orders.length) },
+            { label: "Belum Bayar",   value: String(unpaidCount) },
             { label: "Total Belanja", value: formatPrice(totalSpent) },
           ].map((s) => (
-            <div key={s.label} className="bg-white bg-opacity-10 rounded-xl p-3 text-center">
-              <p className="font-extrabold text-lg leading-tight">{s.value}</p>
-              <p className="text-green-200 text-xs mt-0.5">{s.label}</p>
+            <div key={s.label} className="bg-white bg-opacity-10 rounded-xl p-2 sm:p-3 text-center">
+              <p className="font-extrabold text-sm sm:text-lg leading-tight truncate">{s.value}</p>
+              <p className="text-green-200 text-xs mt-0.5 leading-tight">{s.label}</p>
             </div>
           ))}
         </div>

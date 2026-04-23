@@ -109,10 +109,10 @@ function CheckoutContent() {
   const selectedBank = VA_BANKS.find((b) => b.id === payment);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-8">Checkout</h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-28 lg:pb-10">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-8">Checkout</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form id="checkout-form" onSubmit={handleSubmit}>
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left */}
           <div className="lg:col-span-2 space-y-6">
@@ -234,8 +234,8 @@ function CheckoutContent() {
             </div>
           </div>
 
-          {/* Right: summary */}
-          <div>
+          {/* Right: summary — desktop only */}
+          <div className="hidden lg:block">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky top-24">
               <h2 className="font-bold text-gray-800 text-lg mb-5">Ringkasan Pesanan</h2>
               <div className="space-y-3 mb-4">
@@ -276,6 +276,22 @@ function CheckoutContent() {
           </div>
         </div>
       </form>
+
+      {/* Mobile sticky bottom bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-3 flex items-center gap-4 shadow-lg">
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-gray-500">{items.length} jenis produk</p>
+          <p className="text-lg font-extrabold text-green-700 leading-tight">{formatPrice(totalPrice)}</p>
+        </div>
+        <Button
+          type="submit"
+          form="checkout-form"
+          size="md"
+          disabled={submitting}
+        >
+          {submitting ? "Memproses..." : "Konfirmasi →"}
+        </Button>
+      </div>
     </div>
   );
 }

@@ -38,10 +38,10 @@ function CartContent() {
   const shippingNote = "Biaya pengiriman dihitung saat checkout";
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-28 lg:pb-10">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
             Keranjang Belanja
           </h1>
           <p className="text-gray-500 mt-1">{totalItems} item dalam keranjang</p>
@@ -62,8 +62,8 @@ function CartContent() {
           ))}
         </div>
 
-        {/* Summary */}
-        <div className="lg:col-span-1">
+        {/* Summary — desktop only */}
+        <div className="hidden lg:block lg:col-span-1">
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky top-24">
             <h2 className="font-bold text-gray-800 text-lg mb-5">
               Ringkasan Pesanan
@@ -116,6 +116,17 @@ function CartContent() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* Mobile sticky bottom bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-3 flex items-center gap-4 shadow-lg">
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-gray-500">{totalItems} item</p>
+          <p className="text-lg font-extrabold text-green-700 leading-tight">{formatPrice(totalPrice)}</p>
+        </div>
+        <Link href="/checkout">
+          <Button size="md">Checkout →</Button>
+        </Link>
       </div>
     </div>
   );

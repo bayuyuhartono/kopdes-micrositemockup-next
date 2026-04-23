@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { CartItem } from "@/context/CartContext";
 import Button from "@/components/Button";
+import { StoredOrder, saveOrderToHistory } from "@/lib/orders";
 
 function formatPrice(price: number): string {
   return new Intl.NumberFormat("id-ID", {
@@ -14,32 +14,6 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-export interface StoredOrder {
-  orderId: string;
-  name: string;
-  phone: string;
-  delivery: "pickup" | "delivery";
-  address: string;
-  payment: string;
-  paymentType: "va" | "qris";
-  paymentLabel: string;
-  vaNumber: string;
-  items: CartItem[];
-  totalPrice: number;
-  status: "unpaid" | "paid";
-  createdAt: string;
-}
-
-export function saveOrderToHistory(order: StoredOrder) {
-  try {
-    const raw = localStorage.getItem("simkopdes_orders");
-    const existing: StoredOrder[] = raw ? JSON.parse(raw) : [];
-    const updated = [order, ...existing.filter((o) => o.orderId !== order.orderId)];
-    localStorage.setItem("simkopdes_orders", JSON.stringify(updated));
-  } catch {
-    // ignore
-  }
-}
 
 export default function OrderSuccessPage() {
   const [order, setOrder] = useState<StoredOrder | null>(null);
@@ -159,7 +133,7 @@ export default function OrderSuccessPage() {
               </p>
               <p className="text-xs text-blue-500 mb-1">Nomor Virtual Account</p>
               <div className="flex items-center justify-between gap-3 bg-white rounded-lg border border-blue-100 px-4 py-3 mb-3">
-                <span className="font-mono font-bold text-gray-800 text-xl tracking-widest">
+                <span className="font-mono font-bold text-gray-800 text-sm sm:text-xl tracking-wider sm:tracking-widest break-all">
                   {order.vaNumber}
                 </span>
                 <button
