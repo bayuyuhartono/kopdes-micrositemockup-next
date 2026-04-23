@@ -1,10 +1,8 @@
 import Link from "next/link";
-import ProductCard from "@/components/ProductCard";
 import Button from "@/components/Button";
-import { getTopProducts } from "@/data/products";
+import FilterableProducts from "@/components/FilterableProducts";
 
 export default function LandingPage() {
-  const topProducts = getTopProducts(5);
 
   return (
     <div>
@@ -153,101 +151,18 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Products */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="mb-10">
             <span className="text-green-600 font-semibold text-sm uppercase tracking-wider">
-              Layanan Kami
+              Produk Kami
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">
-              Kenapa Pilih Simkopdes?
+              Semua Produk Unggulan Desa
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: "🌾",
-                title: "Produk Segar Langsung Desa",
-                desc: "Semua produk dipasok langsung dari petani dan pengrajin lokal tanpa perantara, menjamin kesegaran dan keaslian.",
-              },
-              {
-                icon: "💰",
-                title: "Harga Terjangkau",
-                desc: "Beli langsung dari produsen berarti harga lebih hemat. Kami memastikan harga adil untuk produsen dan konsumen.",
-              },
-              {
-                icon: "🚚",
-                title: "Pengiriman ke Rumah",
-                desc: "Pesan dari rumah, produk dikirimkan ke pintu Anda. Tersedia juga opsi ambil langsung di koperasi.",
-              },
-              {
-                icon: "✅",
-                title: "Kualitas Terjamin",
-                desc: "Setiap produk melewati seleksi ketat oleh tim koperasi sebelum sampai ke tangan Anda.",
-              },
-              {
-                icon: "🤝",
-                title: "Mendukung Ekonomi Desa",
-                desc: "Setiap pembelian Anda berkontribusi langsung pada pendapatan petani dan pengrajin desa.",
-              },
-              {
-                icon: "📱",
-                title: "Belanja Mudah Online",
-                desc: "Platform yang simpel dan mudah digunakan dari HP maupun komputer kapan saja dan di mana saja.",
-              },
-            ].map((service) => (
-              <div
-                key={service.title}
-                className="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:border-green-200 hover:bg-green-50 transition-all duration-200 group"
-              >
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="font-bold text-gray-800 text-base mb-2 group-hover:text-green-700 transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {service.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Top Products */}
-      <section className="py-16 sm:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <span className="text-green-600 font-semibold text-sm uppercase tracking-wider">
-                Produk Terlaris
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">
-                Pilihan Terbaik Kami
-              </h2>
-            </div>
-            <Link
-              href="/products"
-              className="hidden sm:inline-flex items-center gap-1 text-green-700 font-semibold text-sm hover:text-green-800 transition-colors"
-            >
-              Lihat Semua
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-            {topProducts.map((product) => (
-              <ProductCard key={product.id} product={product} showDescription />
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <Link href="/products">
-              <Button size="lg">Lihat Semua Produk</Button>
-            </Link>
-          </div>
+          <FilterableProducts />
         </div>
       </section>
     </div>
